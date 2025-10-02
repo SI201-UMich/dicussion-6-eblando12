@@ -1,4 +1,5 @@
 import os
+import csv
 import unittest
 
 
@@ -53,6 +54,12 @@ class PollReader():
         Remember that the first row of a CSV contains all of the column names,
         and each value in a CSV is seperated by a comma.
         """
+
+        reader = csv.reader(self.raw_data)
+        rows = list(reader)
+        if not rows:
+            return
+
 
         # iterate through each row of the data
         for i in self.raw_data:
