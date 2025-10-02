@@ -55,11 +55,6 @@ class PollReader():
         and each value in a CSV is seperated by a comma.
         """
 
-        reader = csv.reader(self.raw_data)
-        rows = list(reader)
-        if not rows:
-            return
-
 
         # iterate through each row of the data
         for i in self.raw_data:
@@ -87,6 +82,17 @@ class PollReader():
             str: A string indicating the candidate with the highest polling percentage or EVEN,
              and the highest polling percentage.
         """
+        h_max = max(self.data_dict["Harris result"]) if self.data_dict["Harris result"] else 0.0
+        t_max = max(self.data_dict["Trump result"]) if self.data_dict["Trump result"] else 0.0
+
+        if h_max > t_max:
+            label, pct = "Harris", h_max
+        elif t_max > h_max:
+            label_pct = "Trump", t_max
+        else:
+            label, pct = "EVEN", h_max
+        
+        return f"{label} {pct*100:.1f}%"
         pass
 
 
